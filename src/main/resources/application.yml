@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: event-fanout-notifications
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/event_fanout}
+    username: ${DB_USER:event_fanout}
+    password: ${DB_PASSWORD:event_fanout}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+
+aws:
+  region: ${AWS_REGION:us-east-1}
+  endpoint-override: ${AWS_ENDPOINT_OVERRIDE:}
+  access-key: ${AWS_ACCESS_KEY:test}
+  secret-key: ${AWS_SECRET_KEY:test}
+
+app:
+  notification-queue:
+    max-receive-count: ${NOTIFICATION_MAX_RECEIVE_COUNT:3}
+
+server:
+  port: 8081
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
