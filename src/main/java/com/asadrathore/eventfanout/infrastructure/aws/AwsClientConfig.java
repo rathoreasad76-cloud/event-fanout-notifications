@@ -7,7 +7,9 @@ import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sns.SnsClient;
+import software.amazon.awssdk.services.sns.SnsClientBuilder;
 import software.amazon.awssdk.services.sqs.SqsClient;
+import software.amazon.awssdk.services.sqs.SqsClientBuilder;
 
 import java.net.URI;
 
@@ -26,7 +28,7 @@ public class AwsClientConfig {
             @Value("${aws.endpoint-override:}") String endpointOverride,
             @Value("${aws.access-key:test}") String accessKey,
             @Value("${aws.secret-key:test}") String secretKey) {
-        SnsClient.Builder builder = SnsClient.builder().region(Region.of(region));
+        SnsClientBuilder builder = SnsClient.builder().region(Region.of(region));
         if (!endpointOverride.isBlank()) {
             builder = builder
                     .endpointOverride(URI.create(endpointOverride))
@@ -42,7 +44,7 @@ public class AwsClientConfig {
             @Value("${aws.endpoint-override:}") String endpointOverride,
             @Value("${aws.access-key:test}") String accessKey,
             @Value("${aws.secret-key:test}") String secretKey) {
-        SqsClient.Builder builder = SqsClient.builder().region(Region.of(region));
+        SqsClientBuilder builder = SqsClient.builder().region(Region.of(region));
         if (!endpointOverride.isBlank()) {
             builder = builder
                     .endpointOverride(URI.create(endpointOverride))

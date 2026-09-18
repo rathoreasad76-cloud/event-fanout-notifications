@@ -16,7 +16,7 @@ services:
       POSTGRES_USER: event_fanout
       POSTGRES_PASSWORD: event_fanout
     ports:
-      - "5433:5432"
+      - "5435:5432"
     volumes:
       - event_fanout_pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -52,8 +52,14 @@ services:
       DB_USER: event_fanout
       DB_PASSWORD: event_fanout
       AWS_ENDPOINT_OVERRIDE: http://localstack:4566
+      # Remote debugging: the JVM listens on 5005 inside the container and the
+      # app starts normally (suspend=n), so nothing blocks waiting for a
+      # debugger. Attach from the IDE to localhost:5006. Drop this line to run
+      # without the debug agent.
+      JAVA_TOOL_OPTIONS: ${JAVA_TOOL_OPTIONS:--agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005}
     ports:
       - "8081:8081"
+      - "5006:5005"
 
 volumes:
   event_fanout_pgdata:

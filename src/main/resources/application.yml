@@ -3,7 +3,7 @@ spring:
     name: event-fanout-notifications
 
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/event_fanout}
+    url: ${DB_URL:jdbc:postgresql://localhost:5435/event_fanout}
     username: ${DB_USER:event_fanout}
     password: ${DB_PASSWORD:event_fanout}
 
@@ -30,6 +30,14 @@ app:
 
 server:
   port: 8081
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
 
 management:
   endpoints:
